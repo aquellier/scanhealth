@@ -11,6 +11,9 @@ video {
   left: 0px;
 }
 
+#video_overlays {
+  z-index:10;
+}
 
 .scan-form {
   height: 130px;

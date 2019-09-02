@@ -3,7 +3,6 @@ import Rails from 'rails-ujs';
 
 const orderByOccurence = (array) => {
   const counts = {};
-  console.log(counts)
   array.forEach((value) => {
     if(!counts[value]){
       counts[value] = 0;
@@ -15,34 +14,35 @@ const orderByOccurence = (array) => {
   })
 }
 
+const postBarCode = async (result) => {
+    let lastResult = []
+    var lastCode = await result.codeResult.code;
+    lastResult.push(lastCode);
+    Quagga.stop();
+    if (lastResult > 20) {
+      try {
+        const code = await orderByOccurence(lastResult)[0];
+        console.log(code);
+        const request = await fetch("/products/get_barcode", {
+          method: 'post',
+          body: JSON.stringify({upc: code}),
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': Rails.csrfToken()
+          },
+          credentials: 'same-origin'
+        });
+      } catch(err) {
+        console.log(err);
+      }
+    }
+  }
+
 const quaggaInit = () => {
 
-  let lastResult = []
-      if (Quagga.initialized == undefined) {
-        Quagga.onDetected((result) => {
-          var lastCode = result.codeResult.code;
-          lastResult.push(lastCode);
-          Quagga.stop();
-          if (lastResult > 20) {
-            const code = orderByOccurence(lastResult)[0];
-            console.log(code);
-            fetch("/products/get_barcode", {
-              method: 'post',
-              body: JSON.stringify({upc: code}),
-              headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-Token': Rails.csrfToken()
-              },
-              credentials: 'same-origin'
-            }).then(function(response) {
-              return response.json();
-            }).then(function(data) {
-              console.log(data);
-            });
-          }
-        })
-      }
-
+  if (Quagga.initialized == undefined) {
+    Quagga.onDetected(postBarCode);
+  }
 
   Quagga.init({
     inputStream : {

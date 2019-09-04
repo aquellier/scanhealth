@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-
+  skip_before_action :authenticate_user!, only: [:new]
   def new
     @product = Product.new
     # (barcode: params[:upc])

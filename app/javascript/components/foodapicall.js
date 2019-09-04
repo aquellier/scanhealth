@@ -2,6 +2,7 @@ const openFoodApiCall = (barcode) => {
   fetch(`https://fr.openfoodfacts.org/api/v0/produit/${barcode}.json`)
       .then(res => res.json())
       .then(json => {
+        console.log(json);
         const productName = json.product.product_name;
         const imageUrl = json.product.image_url;
         const img = document.getElementById("card-image");

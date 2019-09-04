@@ -2,22 +2,35 @@ import Quagga from 'quagga';
 import Rails from 'rails-ujs';
 import { openFoodApiCall } from '../components/foodapicall.js';
 
-const postBarCode = async (result) => {
-  let lastResult = []
-  var lastCode = await result.codeResult.code;
-  while (lastResult.length != 13) {
-    lastResult.push(lastCode);
-  }
-  Quagga.stop();
-    try {
-      const code = await orderByOccurence(lastResult)[0];
-      console.log(code);
-      const barcodeField = document.getElementById('product_barcode');
-      barcodeField.value = code;
-      openFoodApiCall(code);
-    } catch(err) {
-      console.log(err);
+const orderByOccurence = (array) => {
+  const counts = {};
+  array.forEach((value) => {
+    if(!counts[value]){
+      counts[value] = 0;
     }
+    counts[value]++;
+  });
+  return Object.keys(counts).sort(() => {
+    return counts[curKey] < counts[nextKey];
+  })
+}
+
+const postBarCode = async (result) => {
+    let lastResult = []
+    var lastCode = await result.codeResult.code;
+    while (lastResult.length != 13) {
+      lastResult.push(lastCode);
+    }
+      try {
+        const code = await orderByOccurence(lastResult)[0];
+        console.log(code);
+        const barcodeField = document.getElementById('product_barcode');
+        barcodeField.value = code;
+        document.querySelector('.card-product').classList.add('top-slide');
+        openFoodApiCall(code);
+      } catch(err) {
+        console.log(err);
+      }
   }
 
 const quaggaInit = () => {
@@ -30,11 +43,12 @@ const quaggaInit = () => {
     inputStream : {
       name : "Live",
       type : "LiveStream",
+      target: document.querySelector('.video-box'),
       constraints: {
-        width: 480,
-        height: 720
-      },
-      target: document.querySelector('.video-box')    // Or '#yourElement' (optional)
+            width: window.innerWidth,
+            height: window.innerHeight,
+            facing: "environment" // or user
+        }    // Or '#yourElement' (optional)
     },
     decoder : {
       readers : [

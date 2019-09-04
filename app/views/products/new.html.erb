@@ -1,27 +1,21 @@
-<div class="container">
-  <div class="row">
-        <div class="col-xs-12 col-sm-4">
-              <div class="video-box">
-              </div>
-            <div class="scan-form">
-              <h1>HELLO</h1>
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-4 col-md-8">
-          <div class="card-product">
-            <img id="card-image" src="" />
-            <div class="card-product-infos">
-              <h2 id="product-name">Product name</h2>
-              <p>Product description with <strong>relevant info</strong> only.</p>
-            </div>
-          </div>
-        </div>
-      </div>
+<div class="card-product">
+  <img id="card-image" src="" />
+  <div class="card-product-infos">
+    <h2 id="product-name">Product name</h2>
+    <p>Product description with <strong>relevant info</strong> only.</p>
+  </div>
+</div>
 
-    <div class="col-xs-12 col-sm-4">
-      <%= simple_form_for @product do |f| %>
-        <%= f.input :barcode %>
-        <%= f.button :submit, "Save Product", class: "btn btn-primary"%>
-      <% end %>
-    </div>
+<div class="scan-box">
+  <%#= image_tag "logo.png" %>
+  <div class="video-box">
+  </div>
+</div>
+
+
+<div class="d-none">
+  <%= simple_form_for @product do |f| %>
+    <%= f.input :barcode %>
+    <%= f.button :submit, "Save Product", class: "btn btn-primary"%>
+  <% end %>
 </div>

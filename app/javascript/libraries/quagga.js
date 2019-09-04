@@ -25,7 +25,7 @@ const postBarCode = async (result) => {
         const code = await orderByOccurence(lastResult)[0];
         const barcodeField = document.getElementById('product_barcode');
         barcodeField.value = code;
-        document.querySelector('.slider').classList.add('open');
+        document.querySelector('.slider').classList.add('open-partial');
         openFoodApiCall(code);
       } catch(err) {
         console.log(err);

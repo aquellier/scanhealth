@@ -1,22 +1,15 @@
-.scan-box {
-  height: 220px;
+.video-box {
   margin-bottom: 20px;
-}
-
-video {
-  border-radius: 3px;
-  box-shadow: 0 0 3px rgba(0,0,0,0.2);
-  max-width: 100%;
-  top: 0px;
-  left: 0px;
-}
-
-#video_overlays {
-  z-index:10;
+  justify-content: center;
+  video {
+    max-height: 90vh;
+    border-radius: 3px;
+  }
 }
 
 .scan-form {
-  height: 130px;
+  height: 100%;
+  width: 100%;
   background-color: white;
   box-shadow: 0 0 3px rgba(0,0,0,0.2);
   border-radius: 3px;

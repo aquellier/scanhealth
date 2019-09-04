@@ -30,6 +30,10 @@ const quaggaInit = () => {
     inputStream : {
       name : "Live",
       type : "LiveStream",
+      constraints: {
+        width: 480,
+        height: 720
+      },
       target: document.querySelector('.video-box')    // Or '#yourElement' (optional)
     },
     decoder : {
